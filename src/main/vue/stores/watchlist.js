@@ -291,15 +291,19 @@ export const useWatchlistStore = defineStore('watchlist', () => {
   const updateWatchStatus = async (movieId, status) => {
     const movieIndex = watchlist.value.findIndex(item => item.id === movieId)
     if (movieIndex > -1) {
-      const movie = watchlist.value[movieIndex]
-      movie.status = status
-      movie.updated_at = new Date().toISOString()
+      const updatedMovie = {
+        ...watchlist.value[movieIndex],
+        status: status,
+        updated_at: new Date().toISOString()
+      }
       
+      // 使用 Vue 的反應性更新
+      watchlist.value[movieIndex] = updatedMovie
       saveWatchlistToStorage()
 
       // 同步到雲端
       if (isCloudSynced.value) {
-        await syncWatchlistToCloud(movie)
+        await syncWatchlistToCloud(updatedMovie)
       }
 
       return true
