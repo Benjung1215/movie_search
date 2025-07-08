@@ -17,16 +17,32 @@
         ⭐ {{ formatRating(movie.vote_average) }}
       </div>
       
-      <!-- 收藏按鈕 -->
-      <button 
-        @click.stop="toggleFavorite"
-        class="absolute top-2 left-2 p-2 rounded-full transition-colors"
-        :class="isFavorite ? 'bg-red-500 text-white' : 'bg-black bg-opacity-50 text-gray-300 hover:bg-red-500 hover:text-white'"
-      >
-        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-        </svg>
-      </button>
+      <!-- 動作按鈕 -->
+      <div class="absolute top-2 left-2 flex flex-col gap-1">
+        <!-- 收藏按鈕 -->
+        <button 
+          @click.stop="toggleFavorite"
+          class="p-2 rounded-full transition-colors"
+          :class="isFavorite ? 'bg-red-500 text-white' : 'bg-black bg-opacity-50 text-gray-300 hover:bg-red-500 hover:text-white'"
+          title="收藏"
+        >
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+          </svg>
+        </button>
+        
+        <!-- 觀看清單按鈕 -->
+        <button 
+          @click.stop="toggleWatchlist"
+          class="p-2 rounded-full transition-colors"
+          :class="isInWatchlist ? 'bg-blue-500 text-white' : 'bg-black bg-opacity-50 text-gray-300 hover:bg-blue-500 hover:text-white'"
+          title="觀看清單"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+          </svg>
+        </button>
+      </div>
     </div>
     
     <div class="p-4">
@@ -50,6 +66,7 @@
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useFavoritesStore } from '../../stores/favorites.js'
+import { useWatchlistStore } from '../../stores/watchlist.js'
 import { useMoviesStore } from '../../stores/movies.js'
 import tmdbService from '../../services/tmdb.js'
 
@@ -64,6 +81,7 @@ export default {
   setup(props) {
     const router = useRouter()
     const favoritesStore = useFavoritesStore()
+    const watchlistStore = useWatchlistStore()
     const moviesStore = useMoviesStore()
     const imageLoaded = ref(false)
 
@@ -74,6 +92,10 @@ export default {
 
     const isFavorite = computed(() => {
       return favoritesStore.isFavorite(props.movie.id)
+    })
+
+    const isInWatchlist = computed(() => {
+      return watchlistStore.isInWatchlist(props.movie.id)
     })
 
     const movieGenres = computed(() => {
@@ -99,6 +121,10 @@ export default {
       favoritesStore.toggleFavorite(props.movie)
     }
 
+    const toggleWatchlist = () => {
+      watchlistStore.toggleWatchlist(props.movie)
+    }
+
     const navigateToDetail = () => {
       router.push(`/movie/${props.movie.id}`)
     }
@@ -106,12 +132,14 @@ export default {
     return {
       posterUrl,
       isFavorite,
+      isInWatchlist,
       movieGenres,
       imageLoaded,
       formatRating,
       formatDate,
       handleImageError,
       toggleFavorite,
+      toggleWatchlist,
       navigateToDetail
     }
   }

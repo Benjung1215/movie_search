@@ -23,6 +23,11 @@ const routes = [
     component: () => import('../views/Favorites.vue')
   },
   {
+    path: '/watchlist',
+    name: 'Watchlist',
+    component: () => import('../views/Watchlist.vue')
+  },
+  {
     path: '/profile',
     name: 'Profile',
     component: () => import('../views/Profile.vue')

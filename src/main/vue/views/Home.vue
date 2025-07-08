@@ -49,6 +49,16 @@
               {{ favoritesStore.favoriteCount }}
             </span>
           </router-link>
+          
+          <router-link to="/watchlist" class="btn bg-blue-600 hover:bg-blue-700 text-white">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+            </svg>
+            觀看清單
+            <span v-if="watchlistStore.watchlistCount > 0" class="ml-2 bg-blue-500 text-white px-2 py-1 rounded-full text-sm">
+              {{ watchlistStore.watchlistCount }}
+            </span>
+          </router-link>
         </div>
       </div>
 
@@ -153,6 +163,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useMoviesStore } from '../stores/movies.js'
 import { useFavoritesStore } from '../stores/favorites.js'
+import { useWatchlistStore } from '../stores/watchlist.js'
 import tmdbService from '../services/tmdb.js'
 
 export default {
@@ -161,6 +172,7 @@ export default {
     const router = useRouter()
     const moviesStore = useMoviesStore()
     const favoritesStore = useFavoritesStore()
+    const watchlistStore = useWatchlistStore()
     const quickSearchQuery = ref('')
 
     // 方法
@@ -198,6 +210,7 @@ export default {
       quickSearchQuery,
       moviesStore,
       favoritesStore,
+      watchlistStore,
       tmdbService,
       handleQuickSearch,
       navigateToDetail,

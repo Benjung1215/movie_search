@@ -30,6 +30,17 @@
                   {{ favoritesStore.favoriteCount }}
                 </span>
               </router-link>
+              
+              <router-link 
+                to="/watchlist" 
+                class="text-gray-300 hover:text-white transition-colors flex items-center gap-1"
+                active-class="text-primary-500"
+              >
+                觀看清單
+                <span v-if="watchlistStore.watchlistCount > 0" class="bg-blue-500 text-white px-2 py-1 rounded-full text-xs">
+                  {{ watchlistStore.watchlistCount }}
+                </span>
+              </router-link>
             </div>
           </div>
 
@@ -59,6 +70,7 @@
 import { onMounted, watch } from 'vue'
 import { useAuthStore } from './stores/auth.js'
 import { useFavoritesStore } from './stores/favorites.js'
+import { useWatchlistStore } from './stores/watchlist.js'
 import LoginButton from './components/auth/LoginButton.vue'
 
 export default {
@@ -69,6 +81,7 @@ export default {
   setup() {
     const authStore = useAuthStore()
     const favoritesStore = useFavoritesStore()
+    const watchlistStore = useWatchlistStore()
 
     // 初始化應用
     onMounted(async () => {
@@ -78,8 +91,10 @@ export default {
       // 根據認證狀態初始化收藏功能
       if (authStore.isAuthenticated) {
         await favoritesStore.initWithUser()
+        await watchlistStore.initWithUser()
       } else {
         favoritesStore.init()
+        watchlistStore.init()
       }
     })
 
@@ -91,17 +106,20 @@ export default {
           // 用戶剛登入 - 初始化雲端同步
           console.log('用戶登入，開始同步收藏')
           await favoritesStore.initWithUser()
+          await watchlistStore.initWithUser()
         } else if (!isAuthenticated && wasAuthenticated) {
           // 用戶剛登出 - 清理雲端同步
           console.log('用戶登出，停止同步收藏')
           favoritesStore.cleanup()
+          watchlistStore.cleanup()
         }
       }
     )
 
     return {
       authStore,
-      favoritesStore
+      favoritesStore,
+      watchlistStore
     }
   }
 }

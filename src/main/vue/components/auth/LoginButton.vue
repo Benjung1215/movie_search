@@ -71,6 +71,17 @@
             </svg>
             我的收藏
           </router-link>
+          
+          <router-link 
+            to="/watchlist" 
+            class="flex items-center gap-3 px-4 py-2 text-gray-300 hover:bg-dark-700 hover:text-white transition-colors"
+            @click="closeDropdown"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+            </svg>
+            觀看清單
+          </router-link>
 
           <div class="border-t border-dark-600 my-2"></div>
           
