@@ -1,11 +1,108 @@
 <template>
   <div id="app" class="min-h-screen bg-dark-900 text-white">
-    <router-view />
+    <!-- 頂部導航欄 -->
+    <nav class="bg-dark-800 border-b border-dark-600 sticky top-0 z-50">
+      <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+          <!-- Logo 和主導航 -->
+          <div class="flex items-center gap-8">
+            <router-link to="/" class="flex items-center gap-2 text-primary-500 hover:text-primary-400 transition-colors">
+              <span class="text-2xl">🎬</span>
+              <span class="font-bold text-lg hidden sm:block">Vue Movie Search</span>
+            </router-link>
+            
+            <!-- 主要導航鏈接 -->
+            <div class="hidden md:flex items-center gap-6">
+              <router-link 
+                to="/search" 
+                class="text-gray-300 hover:text-white transition-colors"
+                active-class="text-primary-500"
+              >
+                搜尋
+              </router-link>
+              <router-link 
+                to="/favorites" 
+                class="text-gray-300 hover:text-white transition-colors flex items-center gap-1"
+                active-class="text-primary-500"
+              >
+                收藏
+                <span v-if="favoritesStore.favoriteCount > 0" class="bg-primary-500 text-white px-2 py-1 rounded-full text-xs">
+                  {{ favoritesStore.favoriteCount }}
+                </span>
+              </router-link>
+            </div>
+          </div>
+
+          <!-- 用戶區域 -->
+          <div class="flex items-center gap-4">
+            <!-- 載入狀態 -->
+            <div v-if="!authStore.isInitialized" class="flex items-center gap-2 text-gray-400">
+              <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-primary-500"></div>
+              <span class="text-sm hidden sm:block">初始化中...</span>
+            </div>
+            
+            <!-- 登入組件 -->
+            <LoginButton v-else />
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- 主要內容 -->
+    <main>
+      <router-view />
+    </main>
   </div>
 </template>
 
 <script>
+import { onMounted, watch } from 'vue'
+import { useAuthStore } from './stores/auth.js'
+import { useFavoritesStore } from './stores/favorites.js'
+import LoginButton from './components/auth/LoginButton.vue'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    LoginButton
+  },
+  setup() {
+    const authStore = useAuthStore()
+    const favoritesStore = useFavoritesStore()
+
+    // 初始化應用
+    onMounted(async () => {
+      // 初始化 Firebase Auth
+      await authStore.initializeAuth()
+      
+      // 根據認證狀態初始化收藏功能
+      if (authStore.isAuthenticated) {
+        await favoritesStore.initWithUser()
+      } else {
+        favoritesStore.init()
+      }
+    })
+
+    // 監聽認證狀態變化
+    watch(
+      () => authStore.isAuthenticated,
+      async (isAuthenticated, wasAuthenticated) => {
+        if (isAuthenticated && !wasAuthenticated) {
+          // 用戶剛登入 - 初始化雲端同步
+          console.log('用戶登入，開始同步收藏')
+          await favoritesStore.initWithUser()
+        } else if (!isAuthenticated && wasAuthenticated) {
+          // 用戶剛登出 - 清理雲端同步
+          console.log('用戶登出，停止同步收藏')
+          favoritesStore.cleanup()
+        }
+      }
+    )
+
+    return {
+      authStore,
+      favoritesStore
+    }
+  }
 }
 </script>
