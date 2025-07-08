@@ -31,42 +31,6 @@
           </div>
         </div>
 
-        <!-- 導航按鈕 -->
-        <div class="flex flex-wrap gap-4 justify-center">
-          <router-link to="/search" class="btn-primary">
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-            搜尋電影
-          </router-link>
-          
-          <router-link to="/favorites" class="btn-secondary">
-            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-            </svg>
-            我的收藏
-            <span v-if="favoritesStore.favoriteCount > 0" class="ml-2 bg-primary-500 text-white px-2 py-1 rounded-full text-sm">
-              {{ favoritesStore.favoriteCount }}
-            </span>
-          </router-link>
-          
-          <router-link to="/watchlist" class="btn bg-blue-600 hover:bg-blue-700 text-white">
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-            </svg>
-            觀看清單
-            <span v-if="watchlistStore.watchlistCount > 0" class="ml-2 bg-blue-500 text-white px-2 py-1 rounded-full text-sm">
-              {{ watchlistStore.watchlistCount }}
-            </span>
-          </router-link>
-          
-          <router-link to="/genres" class="btn bg-purple-600 hover:bg-purple-700 text-white">
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
-            </svg>
-            類型瀏覽
-          </router-link>
-        </div>
       </div>
 
       <!-- 統計資訊 -->
