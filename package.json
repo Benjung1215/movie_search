@@ -1,0 +1,56 @@
+{
+  "name": "vue-movie-search",
+  "version": "1.0.0",
+  "description": "現代化的電影搜尋和收藏應用程式，整合 TMDB API",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .vue,.js,.jsx,.ts,.tsx --quiet --fix",
+    "lint:check": "eslint . --ext .vue,.js,.jsx,.ts,.tsx",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage"
+  },
+  "dependencies": {
+    "vue": "^3.4.0",
+    "vue-router": "^4.2.0",
+    "pinia": "^2.1.0",
+    "@tanstack/vue-query": "^5.0.0",
+    "@vueuse/core": "^10.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.5.0",
+    "vite": "^5.0.0",
+    "tailwindcss": "^3.4.0",
+    "postcss": "^8.4.0",
+    "autoprefixer": "^10.4.0",
+    "eslint": "^8.56.0",
+    "eslint-plugin-vue": "^9.19.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.1.0",
+    "vitest": "^1.0.0",
+    "@vue/test-utils": "^2.4.0",
+    "jsdom": "^23.0.0",
+    "@vitest/ui": "^1.0.0",
+    "@vitest/coverage-v8": "^1.0.0"
+  },
+  "keywords": [
+    "vue",
+    "vue3",
+    "vite",
+    "movie",
+    "tmdb",
+    "search",
+    "tailwindcss",
+    "pinia",
+    "vue-router"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}

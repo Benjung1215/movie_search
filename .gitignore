@@ -32,9 +32,12 @@ dist-ssr
 
 # Output files (use output/ directory instead)
 *.csv
-*.json
+output/*.json
 *.xlsx
 output/
+
+# Allow package.json
+!package.json
 
 # Temporary files
 tmp/
