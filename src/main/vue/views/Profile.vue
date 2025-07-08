@@ -68,27 +68,51 @@
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         <!-- 收藏類型分佈 -->
         <div class="bg-dark-800 rounded-lg p-6">
-          <h2 class="text-xl font-semibold text-white mb-4">收藏類型分佈</h2>
+          <h2 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            收藏類型分佈
+            <span v-if="genreStats.length > 0" class="text-sm text-gray-400">({{ genreStats.length }} 種類型)</span>
+          </h2>
+          
           <div v-if="genreStats.length > 0" class="space-y-3">
             <div 
-              v-for="genre in genreStats.slice(0, 5)"
+              v-for="(genre, index) in genreStats.slice(0, 6)"
               :key="genre.name"
               class="flex items-center justify-between"
             >
-              <span class="text-gray-300">{{ genre.name }}</span>
+              <div class="flex items-center gap-2">
+                <span 
+                  class="w-3 h-3 rounded-full"
+                  :class="getGenreColor(index)"
+                ></span>
+                <span class="text-gray-300">{{ genre.name }}</span>
+              </div>
               <div class="flex items-center gap-2">
                 <div class="w-24 bg-dark-600 rounded-full h-2">
                   <div 
-                    class="bg-primary-500 h-2 rounded-full"
+                    class="h-2 rounded-full transition-all duration-500"
+                    :class="getGenreBarColor(index)"
                     :style="{ width: `${(genre.count / maxGenreCount) * 100}%` }"
                   ></div>
                 </div>
                 <span class="text-gray-400 text-sm w-8">{{ genre.count }}</span>
+                <span class="text-gray-500 text-xs w-12">{{ ((genre.count / favoritesStore.favoriteCount) * 100).toFixed(0) }}%</span>
               </div>
             </div>
+            
+            <!-- 顯示更多 -->
+            <div v-if="genreStats.length > 6" class="pt-2 border-t border-dark-600">
+              <p class="text-gray-500 text-sm text-center">
+                還有 {{ genreStats.length - 6 }} 種其他類型
+              </p>
+            </div>
           </div>
+          
           <div v-else class="text-gray-500 text-center py-8">
-            還沒有收藏電影
+            <svg class="w-12 h-12 mx-auto text-gray-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2h4a1 1 0 110 2h-1v11a3 3 0 01-3 3H6a3 3 0 01-3-3V6H2a1 1 0 110-2h4zM6 6v11a1 1 0 001 1h10a1 1 0 001-1V6H6z" />
+            </svg>
+            <p>還沒有收藏電影</p>
+            <p class="text-sm mt-1">開始收藏電影來查看類型分佈</p>
           </div>
         </div>
 
@@ -253,15 +277,20 @@ export default {
       favoritesStore.favorites.forEach(movie => {
         if (movie.genre_ids && movie.genre_ids.length > 0) {
           movie.genre_ids.forEach(genreId => {
-            const genreName = moviesStore.getGenreName(genreId) || '未知類型'
-            genreMap.set(genreName, (genreMap.get(genreName) || 0) + 1)
+            const genreName = moviesStore.getGenreName(genreId)
+            if (genreName) {
+              genreMap.set(genreName, (genreMap.get(genreName) || 0) + 1)
+            }
           })
         }
       })
 
-      return Array.from(genreMap.entries())
+      const stats = Array.from(genreMap.entries())
         .map(([name, count]) => ({ name, count }))
         .sort((a, b) => b.count - a.count)
+
+      console.log('類型統計:', stats) // 除錯用
+      return stats
     })
 
     const maxGenreCount = computed(() => {
@@ -312,6 +341,23 @@ export default {
       event.target.src = '/placeholder-poster.jpg'
     }
 
+    // 為類型分佈添加顏色
+    const getGenreColor = (index) => {
+      const colors = [
+        'bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500', 
+        'bg-purple-500', 'bg-pink-500', 'bg-indigo-500', 'bg-teal-500'
+      ]
+      return colors[index % colors.length]
+    }
+
+    const getGenreBarColor = (index) => {
+      const colors = [
+        'bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500', 
+        'bg-purple-500', 'bg-pink-500', 'bg-indigo-500', 'bg-teal-500'
+      ]
+      return colors[index % colors.length]
+    }
+
     // 初始化
     onMounted(async () => {
       // 確保電影類型已載入
@@ -337,7 +383,9 @@ export default {
       confirmClearAll,
       formatDate,
       handleAvatarError,
-      handleImageError
+      handleImageError,
+      getGenreColor,
+      getGenreBarColor
     }
   }
 }

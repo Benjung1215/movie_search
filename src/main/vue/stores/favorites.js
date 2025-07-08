@@ -214,6 +214,16 @@ export const useFavoritesStore = defineStore('favorites', () => {
     const isAlreadyFavorite = favorites.value.some(fav => fav.id === movie.id)
     if (isAlreadyFavorite) return false
 
+    // 處理類型資訊 - 支援 genre_ids (搜尋) 和 genres (詳情)
+    let genreData = []
+    if (movie.genre_ids && movie.genre_ids.length > 0) {
+      // 來自搜尋結果，使用 genre_ids
+      genreData = movie.genre_ids
+    } else if (movie.genres && movie.genres.length > 0) {
+      // 來自詳情頁面，使用 genres 物件陣列
+      genreData = movie.genres.map(genre => genre.id)
+    }
+
     // 只保存必要的電影資訊
     const movieData = {
       id: movie.id,
@@ -224,7 +234,7 @@ export const useFavoritesStore = defineStore('favorites', () => {
       release_date: movie.release_date,
       vote_average: movie.vote_average,
       vote_count: movie.vote_count,
-      genre_ids: movie.genre_ids || [],
+      genre_ids: genreData,
       adult: movie.adult,
       original_language: movie.original_language,
       original_title: movie.original_title,

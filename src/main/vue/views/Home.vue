@@ -183,8 +183,10 @@ export default {
 
     // 初始化
     onMounted(async () => {
-      // 初始化收藏功能
-      favoritesStore.init()
+      // 載入電影類型（確保類型功能正常）
+      if (moviesStore.genres.length === 0) {
+        await moviesStore.fetchGenres()
+      }
       
       // 載入熱門電影（如果還沒載入）
       if (!moviesStore.hasPopularMovies) {
