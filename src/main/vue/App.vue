@@ -50,6 +50,17 @@
                   {{ watchlistStore.watchlistCount }}
                 </span>
               </router-link>
+              
+              <router-link 
+                to="/ratings" 
+                class="text-gray-300 hover:text-white transition-colors flex items-center gap-1"
+                active-class="text-primary-500"
+              >
+                我的評分
+                <span v-if="ratingsStore.ratingsCount > 0" class="bg-yellow-500 text-white px-2 py-1 rounded-full text-xs">
+                  {{ ratingsStore.ratingsCount }}
+                </span>
+              </router-link>
             </div>
           </div>
 
@@ -80,6 +91,7 @@ import { onMounted, watch } from 'vue'
 import { useAuthStore } from './stores/auth.js'
 import { useFavoritesStore } from './stores/favorites.js'
 import { useWatchlistStore } from './stores/watchlist.js'
+import { useRatingsStore } from './stores/ratings.js'
 import LoginButton from './components/auth/LoginButton.vue'
 
 export default {
@@ -91,6 +103,7 @@ export default {
     const authStore = useAuthStore()
     const favoritesStore = useFavoritesStore()
     const watchlistStore = useWatchlistStore()
+    const ratingsStore = useRatingsStore()
 
     // 初始化應用
     onMounted(async () => {
@@ -101,9 +114,11 @@ export default {
       if (authStore.isAuthenticated) {
         await favoritesStore.initWithUser()
         await watchlistStore.initWithUser()
+        await ratingsStore.initWithUser()
       } else {
         favoritesStore.init()
         watchlistStore.init()
+        ratingsStore.init()
       }
     })
 
@@ -116,11 +131,13 @@ export default {
           console.log('用戶登入，開始同步收藏')
           await favoritesStore.initWithUser()
           await watchlistStore.initWithUser()
+          await ratingsStore.initWithUser()
         } else if (!isAuthenticated && wasAuthenticated) {
           // 用戶剛登出 - 清理雲端同步
           console.log('用戶登出，停止同步收藏')
           favoritesStore.cleanup()
           watchlistStore.cleanup()
+          ratingsStore.cleanup()
         }
       }
     )
@@ -128,7 +145,8 @@ export default {
     return {
       authStore,
       favoritesStore,
-      watchlistStore
+      watchlistStore,
+      ratingsStore
     }
   }
 }

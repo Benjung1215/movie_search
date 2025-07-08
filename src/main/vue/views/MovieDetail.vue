@@ -53,17 +53,44 @@
                   @error="handleImageError"
                 />
                 
-                <!-- 收藏按鈕 -->
-                <button 
-                  @click="toggleFavorite"
-                  class="btn w-full mt-4 flex items-center justify-center gap-2"
-                  :class="isFavorite ? 'bg-red-500 hover:bg-red-600 text-white' : 'btn-secondary'"
-                >
-                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-                  </svg>
-                  {{ isFavorite ? '已收藏' : '加入收藏' }}
-                </button>
+                <!-- 操作按鈕 -->
+                <div class="mt-4 space-y-3">
+                  <!-- 收藏按鈕 -->
+                  <button 
+                    @click="toggleFavorite"
+                    class="btn w-full flex items-center justify-center gap-2"
+                    :class="isFavorite ? 'bg-red-500 hover:bg-red-600 text-white' : 'btn-secondary'"
+                  >
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+                    </svg>
+                    {{ isFavorite ? '已收藏' : '加入收藏' }}
+                  </button>
+                  
+                  <!-- 觀看清單按鈕 -->
+                  <button 
+                    @click="toggleWatchlist"
+                    class="btn w-full flex items-center justify-center gap-2"
+                    :class="isInWatchlist ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'btn-secondary'"
+                  >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                    </svg>
+                    {{ isInWatchlist ? '已加入觀看清單' : '加入觀看清單' }}
+                  </button>
+                  
+                  <!-- 評分按鈕 -->
+                  <button 
+                    @click="openRatingModal"
+                    class="btn w-full flex items-center justify-center gap-2"
+                    :class="userRating > 0 ? 'bg-yellow-500 hover:bg-yellow-600 text-white' : 'btn-secondary'"
+                  >
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    {{ userRating > 0 ? `已評分 ${userRating} 星` : '評分' }}
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -78,21 +105,29 @@
               </div>
 
               <!-- 基本資訊 -->
-              <div class="flex flex-wrap items-center gap-4 mb-6">
-                <div class="flex items-center gap-2">
-                  <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  <span class="text-white font-medium">{{ movie.vote_average?.toFixed(1) || 'N/A' }}</span>
-                  <span class="text-gray-400">({{ movie.vote_count || 0 }} 評分)</span>
+              <div class="space-y-4 mb-6">
+                <!-- 評分資訊 -->
+                <div class="flex flex-wrap items-center gap-4">
+                  <div class="flex items-center gap-2">
+                    <svg class="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <span class="text-white font-medium">TMDB {{ movie.vote_average?.toFixed(1) || 'N/A' }}</span>
+                    <span class="text-gray-400">({{ movie.vote_count || 0 }} 評分)</span>
+                  </div>
+                  
+                  <div v-if="userRating > 0" class="flex items-center gap-2">
+                    <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <span class="text-white font-medium">我的評分 {{ userRating }}</span>
+                  </div>
                 </div>
                 
-                <div class="text-gray-400">
-                  {{ formatDate(movie.release_date) }}
-                </div>
-                
-                <div class="text-gray-400">
-                  {{ formatRuntime(movie.runtime) }}
+                <!-- 其他資訊 -->
+                <div class="flex flex-wrap items-center gap-4 text-gray-400">
+                  <div>{{ formatDate(movie.release_date) }}</div>
+                  <div>{{ formatRuntime(movie.runtime) }}</div>
                 </div>
               </div>
 
@@ -161,6 +196,61 @@
         </div>
       </div>
     </div>
+
+    <!-- 評分對話框 -->
+    <div 
+      v-if="showRatingModal" 
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+      @click="closeRatingModal"
+    >
+      <div 
+        class="bg-dark-800 rounded-lg p-6 w-full max-w-md"
+        @click.stop
+      >
+        <h3 class="text-xl font-semibold text-white mb-4">
+          {{ userRating > 0 ? '修改評分' : '評分電影' }}
+        </h3>
+        
+        <div class="text-center mb-6">
+          <h4 class="text-white font-medium mb-2">{{ movie?.title }}</h4>
+          <StarRating
+            v-model="tempRating"
+            :show-text="true"
+            :show-clear="true"
+            size="lg"
+          />
+        </div>
+        
+        <!-- 評論 -->
+        <div class="mb-6">
+          <label class="block text-white font-medium mb-2">評論（可選）</label>
+          <textarea
+            v-model="ratingComment"
+            placeholder="分享您對這部電影的想法..."
+            class="w-full bg-dark-700 text-white px-3 py-2 rounded border border-dark-600 focus:border-primary-500 focus:outline-none resize-none"
+            rows="3"
+          ></textarea>
+        </div>
+        
+        <!-- 按鈕 -->
+        <div class="flex gap-3">
+          <button
+            @click="closeRatingModal"
+            class="btn-secondary flex-1"
+          >
+            取消
+          </button>
+          <button
+            @click="handleRate(tempRating)"
+            :disabled="tempRating === 0"
+            class="btn-primary flex-1"
+            :class="{ 'opacity-50 cursor-not-allowed': tempRating === 0 }"
+          >
+            {{ tempRating > 0 ? '確認評分' : '請選擇評分' }}
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -169,15 +259,30 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useMoviesStore } from '../stores/movies.js'
 import { useFavoritesStore } from '../stores/favorites.js'
+import { useRatingsStore } from '../stores/ratings.js'
+import { useWatchlistStore } from '../stores/watchlist.js'
 import tmdbService from '../services/tmdb.js'
+import StarRating from '../components/rating/StarRating.vue'
+import RatingDisplay from '../components/rating/RatingDisplay.vue'
 
 export default {
   name: 'MovieDetail',
+  components: {
+    StarRating,
+    RatingDisplay
+  },
   setup() {
     const route = useRoute()
     const router = useRouter()
     const moviesStore = useMoviesStore()
     const favoritesStore = useFavoritesStore()
+    const ratingsStore = useRatingsStore()
+    const watchlistStore = useWatchlistStore()
+    
+    // 狀態
+    const showRatingModal = ref(false)
+    const ratingComment = ref('')
+    const tempRating = ref(0)
 
     // 計算屬性
     const movie = computed(() => moviesStore.currentMovie)
@@ -192,6 +297,18 @@ export default {
 
     const isFavorite = computed(() => {
       return movie.value ? favoritesStore.isFavorite(movie.value.id) : false
+    })
+
+    const isInWatchlist = computed(() => {
+      return movie.value ? watchlistStore.isInWatchlist(movie.value.id) : false
+    })
+
+    const currentRating = computed(() => {
+      return movie.value ? ratingsStore.getMovieRating(movie.value.id) : null
+    })
+
+    const userRating = computed(() => {
+      return currentRating.value ? currentRating.value.userRating : 0
     })
 
     // 方法
@@ -249,6 +366,38 @@ export default {
       router.push(`/movie/${movieId}`)
     }
 
+    const toggleWatchlist = () => {
+      if (movie.value) {
+        watchlistStore.toggleWatchlist(movie.value)
+      }
+    }
+
+    const handleRate = async (rating) => {
+      if (movie.value && rating > 0) {
+        await ratingsStore.rateMovie(movie.value, rating, ratingComment.value)
+        showRatingModal.value = false
+        ratingComment.value = ''
+        tempRating.value = 0
+      }
+    }
+
+    const openRatingModal = () => {
+      if (currentRating.value) {
+        ratingComment.value = currentRating.value.comment || ''
+        tempRating.value = currentRating.value.userRating
+      } else {
+        ratingComment.value = ''
+        tempRating.value = 0
+      }
+      showRatingModal.value = true
+    }
+
+    const closeRatingModal = () => {
+      showRatingModal.value = false
+      ratingComment.value = ''
+      tempRating.value = 0
+    }
+
     // 監聽路由變化
     watch(
       () => route.params.id,
@@ -260,6 +409,8 @@ export default {
     // 初始化
     onMounted(() => {
       favoritesStore.init()
+      watchlistStore.init()
+      ratingsStore.init()
       loadMovieDetails()
     })
 
@@ -268,6 +419,12 @@ export default {
       posterUrl,
       backdropUrl,
       isFavorite,
+      isInWatchlist,
+      currentRating,
+      userRating,
+      showRatingModal,
+      ratingComment,
+      tempRating,
       moviesStore,
       tmdbService,
       loadMovieDetails,
@@ -277,6 +434,10 @@ export default {
       handleProfileImageError,
       getProfileUrl,
       toggleFavorite,
+      toggleWatchlist,
+      handleRate,
+      openRatingModal,
+      closeRatingModal,
       goBack,
       navigateToMovie
     }

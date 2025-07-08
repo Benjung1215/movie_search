@@ -142,6 +142,17 @@
                 <span>{{ formatAddedDate(movie.added_at) }}</span>
               </div>
               
+              <!-- 評分顯示 -->
+              <div class="mb-3">
+                <RatingDisplay
+                  :user-rating="getUserRating(movie.id)"
+                  :tmdb-rating="movie.vote_average"
+                  :vote-count="movie.vote_count"
+                  :show-quick-rate="movie.status === 'watched'"
+                  @quick-rate="handleQuickRate(movie.id)"
+                />
+              </div>
+              
               <!-- 動作按鈕 -->
               <div class="flex items-center gap-2">
                 <!-- 狀態切換 -->
@@ -202,14 +213,20 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useWatchlistStore } from '../stores/watchlist.js'
+import { useRatingsStore } from '../stores/ratings.js'
 import { useMoviesStore } from '../stores/movies.js'
 import tmdbService from '../services/tmdb.js'
+import RatingDisplay from '../components/rating/RatingDisplay.vue'
 
 export default {
   name: 'Watchlist',
+  components: {
+    RatingDisplay
+  },
   setup() {
     const router = useRouter()
     const watchlistStore = useWatchlistStore()
+    const ratingsStore = useRatingsStore()
     const moviesStore = useMoviesStore()
     
     const searchQuery = ref('')
@@ -322,6 +339,14 @@ export default {
       event.target.src = '/placeholder-poster.jpg'
     }
 
+    const getUserRating = (movieId) => {
+      return ratingsStore.getUserRating(movieId)
+    }
+
+    const handleQuickRate = (movieId) => {
+      navigateToDetail(movieId)
+    }
+
     // 生命週期
     onMounted(async () => {
       // 確保電影類型已載入
@@ -332,6 +357,7 @@ export default {
 
     return {
       watchlistStore,
+      ratingsStore,
       moviesStore,
       tmdbService,
       searchQuery,
@@ -347,7 +373,9 @@ export default {
       formatAddedDate,
       getStatusText,
       getStatusColor,
-      handleImageError
+      handleImageError,
+      getUserRating,
+      handleQuickRate
     }
   }
 }

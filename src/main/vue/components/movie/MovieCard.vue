@@ -54,10 +54,19 @@
         {{ movie.overview || '暫無劇情簡介' }}
       </p>
       
-      <div class="flex items-center justify-between text-sm text-gray-500">
+      <div class="flex items-center justify-between text-sm text-gray-500 mb-2">
         <span>{{ formatDate(movie.release_date) }}</span>
         <span>{{ movieGenres }}</span>
       </div>
+      
+      <!-- 評分顯示 -->
+      <RatingDisplay
+        :user-rating="userRating"
+        :tmdb-rating="movie.vote_average"
+        :vote-count="movie.vote_count"
+        :show-quick-rate="true"
+        @quick-rate="handleQuickRate"
+      />
     </div>
   </div>
 </template>
@@ -67,11 +76,16 @@ import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useFavoritesStore } from '../../stores/favorites.js'
 import { useWatchlistStore } from '../../stores/watchlist.js'
+import { useRatingsStore } from '../../stores/ratings.js'
 import { useMoviesStore } from '../../stores/movies.js'
 import tmdbService from '../../services/tmdb.js'
+import RatingDisplay from '../rating/RatingDisplay.vue'
 
 export default {
   name: 'MovieCard',
+  components: {
+    RatingDisplay
+  },
   props: {
     movie: {
       type: Object,
@@ -82,6 +96,7 @@ export default {
     const router = useRouter()
     const favoritesStore = useFavoritesStore()
     const watchlistStore = useWatchlistStore()
+    const ratingsStore = useRatingsStore()
     const moviesStore = useMoviesStore()
     const imageLoaded = ref(false)
 
@@ -100,6 +115,10 @@ export default {
 
     const movieGenres = computed(() => {
       return moviesStore.getMovieGenres(props.movie.genre_ids)
+    })
+
+    const userRating = computed(() => {
+      return ratingsStore.getUserRating(props.movie.id)
     })
 
     // 方法
@@ -129,18 +148,24 @@ export default {
       router.push(`/movie/${props.movie.id}`)
     }
 
+    const handleQuickRate = () => {
+      navigateToDetail()
+    }
+
     return {
       posterUrl,
       isFavorite,
       isInWatchlist,
       movieGenres,
+      userRating,
       imageLoaded,
       formatRating,
       formatDate,
       handleImageError,
       toggleFavorite,
       toggleWatchlist,
-      navigateToDetail
+      navigateToDetail,
+      handleQuickRate
     }
   }
 }
