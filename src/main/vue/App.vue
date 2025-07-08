@@ -20,6 +20,15 @@
               >
                 搜尋
               </router-link>
+              
+              <router-link 
+                to="/genres" 
+                class="text-gray-300 hover:text-white transition-colors"
+                active-class="text-primary-500"
+              >
+                類型
+              </router-link>
+              
               <router-link 
                 to="/favorites" 
                 class="text-gray-300 hover:text-white transition-colors flex items-center gap-1"

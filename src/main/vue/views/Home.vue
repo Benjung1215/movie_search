@@ -59,6 +59,13 @@
               {{ watchlistStore.watchlistCount }}
             </span>
           </router-link>
+          
+          <router-link to="/genres" class="btn bg-purple-600 hover:bg-purple-700 text-white">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+            </svg>
+            類型瀏覽
+          </router-link>
         </div>
       </div>
 
@@ -111,6 +118,32 @@
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
               </svg>
               <span class="text-gray-400 text-sm">{{ movie.vote_average?.toFixed(1) || 'N/A' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 熱門類型快速入口 -->
+      <div v-if="popularGenres.length > 0">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl font-semibold text-white">熱門類型</h2>
+          <router-link to="/genres" class="text-primary-500 hover:text-primary-400 flex items-center gap-1">
+            查看全部
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </router-link>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-8">
+          <div 
+            v-for="genre in popularGenres.slice(0, 6)"
+            :key="genre.id"
+            class="cursor-pointer hover:scale-105 transition-transform"
+            @click="navigateToGenre(genre.id)"
+          >
+            <div class="bg-gradient-to-br from-primary-500 to-purple-600 aspect-square rounded-lg flex items-center justify-center shadow-lg">
+              <span class="text-white font-bold text-lg text-center px-2">{{ genre.name }}</span>
             </div>
           </div>
         </div>
@@ -174,6 +207,7 @@ export default {
     const favoritesStore = useFavoritesStore()
     const watchlistStore = useWatchlistStore()
     const quickSearchQuery = ref('')
+    const popularGenres = ref([])
 
     // 方法
     const handleQuickSearch = () => {
@@ -192,6 +226,16 @@ export default {
     const handleImageError = (event) => {
       event.target.src = '/placeholder-poster.jpg'
     }
+    
+    const navigateToGenre = (genreId) => {
+      router.push(`/genres/${genreId}`)
+    }
+    
+    const loadPopularGenres = () => {
+      // 簡單的熱門類型列表
+      const popularGenreIds = [28, 12, 16, 35, 80, 99, 18, 10751, 14, 36, 27, 10402, 9648, 10749, 878, 10770, 53, 10752, 37]
+      popularGenres.value = moviesStore.genres.filter(genre => popularGenreIds.includes(genre.id))
+    }
 
     // 初始化
     onMounted(async () => {
@@ -204,6 +248,9 @@ export default {
       if (!moviesStore.hasPopularMovies) {
         await moviesStore.fetchPopularMovies()
       }
+      
+      // 載入熱門類型
+      loadPopularGenres()
     })
 
     return {
@@ -212,8 +259,10 @@ export default {
       favoritesStore,
       watchlistStore,
       tmdbService,
+      popularGenres,
       handleQuickSearch,
       navigateToDetail,
+      navigateToGenre,
       handleImageError
     }
   }

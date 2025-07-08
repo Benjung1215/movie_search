@@ -74,11 +74,76 @@ class TMDBService {
   }
 
   // 依類型搜尋電影
-  async getMoviesByGenre(genreId, page = 1) {
+  async getMoviesByGenre(genreId, page = 1, sortBy = 'popularity.desc') {
     return this.fetchFromAPI('/discover/movie', {
       with_genres: genreId,
       page,
+      sort_by: sortBy
+    })
+  }
+
+  // 進階搜尋電影
+  async discoverMovies(options = {}) {
+    const {
+      page = 1,
+      sortBy = 'popularity.desc',
+      withGenres,
+      withoutGenres,
+      primaryReleaseYear,
+      releaseDateGte,
+      releaseDateLte,
+      voteAverageGte,
+      voteAverageLte,
+      voteCountGte,
+      withRuntime,
+      withOriginalLanguage
+    } = options
+
+    const params = {
+      page,
+      sort_by: sortBy
+    }
+
+    if (withGenres) params.with_genres = withGenres
+    if (withoutGenres) params.without_genres = withoutGenres
+    if (primaryReleaseYear) params.primary_release_year = primaryReleaseYear
+    if (releaseDateGte) params['release_date.gte'] = releaseDateGte
+    if (releaseDateLte) params['release_date.lte'] = releaseDateLte
+    if (voteAverageGte) params['vote_average.gte'] = voteAverageGte
+    if (voteAverageLte) params['vote_average.lte'] = voteAverageLte
+    if (voteCountGte) params['vote_count.gte'] = voteCountGte
+    if (withRuntime) params.with_runtime = withRuntime
+    if (withOriginalLanguage) params.with_original_language = withOriginalLanguage
+
+    return this.fetchFromAPI('/discover/movie', params)
+  }
+
+  // 取得類型的熱門電影（用於類型頁面預覽）
+  async getGenrePreviewMovies(genreId, limit = 4) {
+    const response = await this.getMoviesByGenre(genreId, 1)
+    return {
+      ...response,
+      results: response.results.slice(0, limit)
+    }
+  }
+
+  // 取得年份範圍內的電影
+  async getMoviesByYear(year, page = 1) {
+    return this.fetchFromAPI('/discover/movie', {
+      primary_release_year: year,
+      page,
       sort_by: 'popularity.desc'
+    })
+  }
+
+  // 取得高評分電影（評分範圍）
+  async getMoviesByRating(minRating, maxRating = 10, page = 1) {
+    return this.fetchFromAPI('/discover/movie', {
+      'vote_average.gte': minRating,
+      'vote_average.lte': maxRating,
+      'vote_count.gte': 100, // 確保有足夠的評分數
+      page,
+      sort_by: 'vote_average.desc'
     })
   }
 
@@ -101,6 +166,48 @@ class TMDBService {
   // 演員照片 URL
   getProfileUrl(path, size = 'w185') {
     return this.getImageUrl(path, size)
+  }
+
+  // 取得類型統計資訊
+  async getGenreStats(genreId) {
+    try {
+      const response = await this.getMoviesByGenre(genreId, 1)
+      return {
+        totalResults: response.total_results,
+        totalPages: response.total_pages,
+        popularMovies: response.results.slice(0, 4)
+      }
+    } catch (error) {
+      console.error('Error fetching genre stats:', error)
+      return {
+        totalResults: 0,
+        totalPages: 0,
+        popularMovies: []
+      }
+    }
+  }
+
+  // 取得多個類型的統計資訊
+  async getAllGenresStats() {
+    try {
+      const genresResponse = await this.getGenres()
+      const genres = genresResponse.genres
+      
+      const genresWithStats = await Promise.all(
+        genres.map(async (genre) => {
+          const stats = await this.getGenreStats(genre.id)
+          return {
+            ...genre,
+            ...stats
+          }
+        })
+      )
+      
+      return genresWithStats
+    } catch (error) {
+      console.error('Error fetching all genres stats:', error)
+      return []
+    }
   }
 }
 
