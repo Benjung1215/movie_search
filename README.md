@@ -106,13 +106,6 @@ vue-movie-search/
 - **Prettier** - 程式碼格式化
 - **Git Hooks** - 自動化程式碼檢查
 
-## 📸 專案截圖
-
-<div align="center">
-  <img src="https://via.placeholder.com/800x500/1a1a1a/f59e0b?text=Home+Page" alt="首頁截圖" style="border-radius: 10px; margin: 10px;">
-  <img src="https://via.placeholder.com/800x500/1a1a1a/f59e0b?text=Movie+Details" alt="電影詳情頁截圖" style="border-radius: 10px; margin: 10px;">
-</div>
-
 ## 🎯 核心功能
 
 <table>
@@ -356,27 +349,6 @@ npm run test -- MovieCard.test.js
 - **效能分析**：使用 Chrome DevTools
 - **錯誤邊界**：實作錯誤處理機制
 
-## 🤝 貢獻指南
-
-我們歡迎任何形式的貢獻！
-
-### 📋 如何貢獻
-
-1. **Fork 這個專案**
-2. **建立功能分支**
-   ```bash
-   git checkout -b feature/amazing-feature
-   ```
-3. **提交您的變更**
-   ```bash
-   git commit -m "Add: 新增驚人的功能"
-   ```
-4. **推送到分支**
-   ```bash
-   git push origin feature/amazing-feature
-   ```
-5. **開啟 Pull Request**
-
 ### 🐛 回報錯誤
 
 如果您發現錯誤，請：
@@ -402,9 +374,6 @@ npm run test -- MovieCard.test.js
 - 為新功能添加測試
 - 更新相關文件
 
-## 📄 授權資訊
-
-本專案使用 [MIT 授權](LICENSE)
 
 ### 🙏 致謝
 
@@ -421,13 +390,12 @@ npm run test -- MovieCard.test.js
 
 ### 🔗 相關連結
 
-- [專案展示](https://your-demo-url.vercel.app)
-- [設計稿](https://your-design-url.figma.com)
+- [專案展示](https://movie-search-sooty-tau.vercel.app/)
 - [API 文件](https://developers.themoviedb.org/3)
 
 ---
 
 <div align="center">
   <p>使用 ❤️ 和 Vue.js 建立</p>
-  <p>© 2024 Vue Movie Search App. All rights reserved.</p>
+  <p>© 2025 Vue Movie Search App. All rights reserved.</p>
 </div>
