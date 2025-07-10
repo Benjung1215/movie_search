@@ -94,44 +94,68 @@ git push origin main
 Vue 3 電影搜尋應用程式 - 現代化的電影搜尋和收藏應用程式，整合 TMDB API
 
 ### 🎯 **DEVELOPMENT STATUS**
-- **Setup**: In Progress
-- **Core Features**: Pending
-- **Testing**: Pending
-- **Documentation**: Pending
+- **Setup**: ✅ Complete
+- **Core Features**: ✅ Implemented (Movies, Search, Favorites, Ratings)
+- **Testing**: ✅ Configured (Vitest + Vue Test Utils)
+- **Documentation**: ✅ Complete
 
 ### 🛠️ **TECH STACK**
-- Vue 3 + JavaScript + Composition API
-- Vite 建置工具
-- Tailwind CSS + Headless UI Vue
-- Vue Router 4 + Pinia
-- TanStack Query Vue + VueUse
-- TMDB API 整合
+- **Frontend**: Vue 3 + JavaScript + Composition API
+- **Build Tool**: Vite 5 (dev server port 3000, auto-opens browser)
+- **Styling**: Tailwind CSS + PostCSS
+- **State Management**: Pinia (composition API style)
+- **Routing**: Vue Router 4 (lazy-loaded routes)
+- **HTTP Client**: TanStack Query Vue + VueUse
+- **API Integration**: TMDB API (environment variables required)
+- **Testing**: Vitest + Vue Test Utils + jsdom
+- **Linting**: ESLint + Prettier
+
+### 🎬 **CORE FEATURES IMPLEMENTED**
+- **Movie Search**: Real-time search with debouncing
+- **Movie Details**: Full movie information with cast/crew
+- **Collections**: Favorites, Watchlist, Personal Ratings
+- **Browse**: Popular, Top Rated, Genre-based browsing
+- **Advanced Search**: Filters by genre, year, rating
+- **Responsive Design**: Mobile-first approach
 
 ### 📁 **PROJECT STRUCTURE**
 ```
 vue-movie-search/
 ├── CLAUDE.md              # Essential rules for Claude Code
 ├── README.md              # Project documentation
-├── package.json           # Vue 3 dependencies
-├── vite.config.js         # Vite configuration
-├── tailwind.config.js     # Tailwind configuration
+├── package.json           # Vue 3 dependencies & scripts
+├── vite.config.js         # Vite configuration with aliases
+├── vitest.config.js       # Vitest testing configuration
+├── tailwind.config.js     # Tailwind CSS configuration
+├── postcss.config.js      # PostCSS configuration
+├── index.html             # Main HTML template
 ├── src/
 │   ├── main/
-│   │   ├── vue/           # Vue 3 components and pages
+│   │   ├── vue/           # Vue 3 application root
+│   │   │   ├── App.vue           # Root component
+│   │   │   ├── main.js           # Application entry point
+│   │   │   ├── style.css         # Global styles
 │   │   │   ├── components/
 │   │   │   │   ├── ui/           # Base UI components
 │   │   │   │   ├── movie/        # Movie-related components
-│   │   │   │   └── layout/       # Layout components
-│   │   │   ├── views/            # Page components
-│   │   │   ├── composables/      # Composition functions
-│   │   │   ├── stores/           # Pinia state management
-│   │   │   └── router/           # Vue Router
+│   │   │   │   ├── layout/       # Layout components
+│   │   │   │   ├── auth/         # Authentication components
+│   │   │   │   └── rating/       # Rating components
+│   │   │   ├── views/            # Page components (router views)
+│   │   │   ├── composables/      # Vue 3 composables
+│   │   │   ├── stores/           # Pinia state stores
+│   │   │   ├── services/         # API services (TMDB, Firebase)
+│   │   │   └── router/           # Vue Router configuration
 │   │   └── resources/
 │   │       ├── config/           # Environment variables
 │   │       └── assets/           # Static assets
 │   └── test/                     # Test files
-├── docs/                         # Documentation
-└── output/                       # Output files
+│       ├── setup.js              # Test setup configuration
+│       ├── components/           # Component tests
+│       ├── composables/          # Composable tests
+│       └── utils/                # Utility tests
+├── dist/                         # Build output (generated)
+└── node_modules/                 # Dependencies (auto-managed)
 ```
 
 ## 🎯 RULE COMPLIANCE CHECK
@@ -147,16 +171,69 @@ Before starting ANY task, verify:
 
 ```bash
 # Development
-npm run dev
+npm run dev              # Start dev server at localhost:3000 (auto-opens browser)
 
-# Build
-npm run build
+# Build & Preview
+npm run build            # Build for production (outputs to dist/)
+npm run preview          # Preview production build locally
 
-# Test
-npm run test
+# Testing
+npm run test             # Run unit tests with Vitest
+npm run test:ui          # Run tests with interactive UI
+npm run test:coverage    # Run tests with coverage report
 
-# Lint
-npm run lint
+# Linting
+npm run lint             # Fix linting issues automatically
+npm run lint:check       # Check linting without fixing
+
+# Common Development Workflow
+npm run dev              # Start development - primary command
+npm run test             # Run tests after changes
+npm run lint             # Fix code style issues
+npm run build            # Build for production before deployment
+```
+
+## 🔧 KEY ARCHITECTURAL PATTERNS
+
+### 📦 **Path Aliases (Vite Configuration)**
+```javascript
+// Use these aliases in imports:
+'@': 'src/main/vue'                    # Root Vue directory
+'@/components': 'src/main/vue/components'
+'@/views': 'src/main/vue/views'
+'@/composables': 'src/main/vue/composables'
+'@/stores': 'src/main/vue/stores'
+'@/assets': 'src/main/resources/assets'
+'@/config': 'src/main/resources/config'
+```
+
+### 🏪 **State Management (Pinia)**
+```javascript
+// All stores use Composition API style
+// Key stores: movies, auth, favorites, ratings, watchlist
+// Example: const moviesStore = useMoviesStore()
+```
+
+### 🛣️ **Routing (Vue Router 4)**
+```javascript
+// All routes use lazy loading except Home
+// Route structure: /, /search, /movie/:id, /favorites, etc.
+// Navigation: router.push({ name: 'MovieDetail', params: { id } })
+```
+
+### 🌐 **API Integration (TMDB Service)**
+```javascript
+// Service class pattern with methods for all TMDB endpoints
+// Environment variables required: VITE_TMDB_API_KEY, VITE_TMDB_BASE_URL
+// Usage: import tmdbService from '@/services/tmdb.js'
+```
+
+### 🧪 **Testing Setup**
+```javascript
+// Vitest with Vue Test Utils and jsdom
+// Test files: src/test/**/*.test.js
+// Setup file: src/test/setup.js
+// Run single test: npm run test -- filename.test.js
 ```
 
 ## 🚨 TECHNICAL DEBT PREVENTION
