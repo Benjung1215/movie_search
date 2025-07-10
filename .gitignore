@@ -45,6 +45,28 @@ temp/
 *.tmp
 *.bak
 
+# Testing
+coverage/
+*.lcov
+.nyc_output
+
+# Firebase
+.firebase/
+firebase-debug.log*
+firestore-debug.log*
+
+# Deployment
+.vercel
+.netlify
+
+# Cache directories
+.cache
+.parcel-cache
+.vite/
+
+# ESLint cache
+.eslintcache
+
 # OS
 .DS_Store
 Thumbs.db

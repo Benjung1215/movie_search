@@ -1,16 +1,15 @@
 <template>
   <div class="card hover:scale-105 transition-transform duration-200 cursor-pointer">
     <div class="relative">
-      <img 
-        :src="posterUrl" 
+      <OptimizedImage
+        :src="posterUrl"
         :alt="movie.title"
-        class="w-full h-80 object-cover"
-        @error="handleImageError"
-        @load="imageLoaded = true"
+        fallback-src="/placeholder-poster.jpg"
+        aspect-ratio="2/3"
+        container-class="relative overflow-hidden"
+        image-class="w-full h-80 object-cover"
+        preload
       />
-      <div v-if="!imageLoaded" class="w-full h-80 bg-dark-700 flex items-center justify-center">
-        <div class="text-gray-400">載入中...</div>
-      </div>
       
       <!-- 評分標籤 -->
       <div class="absolute top-2 right-2 bg-black bg-opacity-75 text-white px-2 py-1 rounded text-sm">
@@ -80,11 +79,13 @@ import { useRatingsStore } from '../../stores/ratings.js'
 import { useMoviesStore } from '../../stores/movies.js'
 import tmdbService from '../../services/tmdb.js'
 import RatingDisplay from '../rating/RatingDisplay.vue'
+import OptimizedImage from '../ui/OptimizedImage.vue'
 
 export default {
   name: 'MovieCard',
   components: {
-    RatingDisplay
+    RatingDisplay,
+    OptimizedImage
   },
   props: {
     movie: {
@@ -98,7 +99,6 @@ export default {
     const watchlistStore = useWatchlistStore()
     const ratingsStore = useRatingsStore()
     const moviesStore = useMoviesStore()
-    const imageLoaded = ref(false)
 
     // 計算屬性
     const posterUrl = computed(() => {
@@ -132,9 +132,6 @@ export default {
       return date.getFullYear()
     }
 
-    const handleImageError = (event) => {
-      event.target.src = '/placeholder-poster.jpg'
-    }
 
     const toggleFavorite = () => {
       favoritesStore.toggleFavorite(props.movie)
@@ -158,10 +155,8 @@ export default {
       isInWatchlist,
       movieGenres,
       userRating,
-      imageLoaded,
       formatRating,
       formatDate,
-      handleImageError,
       toggleFavorite,
       toggleWatchlist,
       navigateToDetail,
