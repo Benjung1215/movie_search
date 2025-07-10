@@ -1,6 +1,5 @@
 <template>
-  <div class="min-h-screen bg-dark-900">
-    <div class="container mx-auto px-4 py-8">
+  <div>
       <!-- 主標題 -->
       <div class="text-center mb-12">
         <h1 class="text-5xl font-bold text-primary-500 mb-4">
@@ -151,7 +150,6 @@
           <p class="text-gray-400">查看完整電影資訊、演員陣容和相似推薦</p>
         </div>
       </div>
-    </div>
   </div>
 </template>
 

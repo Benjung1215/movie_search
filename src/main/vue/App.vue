@@ -72,8 +72,11 @@
               <span class="text-sm hidden sm:block">初始化中...</span>
             </div>
             
-            <!-- 登入組件 -->
-            <LoginButton v-else />
+            <!-- 桌面版登入組件 -->
+            <LoginButton v-else class="hidden md:block" />
+            
+            <!-- 行動版菜單按鈕 -->
+            <MobileMenu />
           </div>
         </div>
       </div>
@@ -81,8 +84,23 @@
 
     <!-- 主要內容 -->
     <main>
-      <router-view />
+      <PageTransition name="fade">
+        <router-view v-slot="{ Component }">
+          <div class="min-h-screen bg-dark-900">
+            <div class="container mx-auto px-4 py-8">
+              <!-- 麵包屑導航 -->
+              <Breadcrumb />
+              
+              <!-- 頁面內容 -->
+              <component :is="Component" />
+            </div>
+          </div>
+        </router-view>
+      </PageTransition>
     </main>
+
+    <!-- 通知中心 -->
+    <NotificationCenter />
   </div>
 </template>
 
@@ -93,11 +111,19 @@ import { useFavoritesStore } from './stores/favorites.js'
 import { useWatchlistStore } from './stores/watchlist.js'
 import { useRatingsStore } from './stores/ratings.js'
 import LoginButton from './components/auth/LoginButton.vue'
+import MobileMenu from './components/layout/MobileMenu.vue'
+import Breadcrumb from './components/layout/Breadcrumb.vue'
+import PageTransition from './components/ui/PageTransition.vue'
+import NotificationCenter from './components/ui/NotificationCenter.vue'
 
 export default {
   name: 'App',
   components: {
-    LoginButton
+    LoginButton,
+    MobileMenu,
+    Breadcrumb,
+    PageTransition,
+    NotificationCenter
   },
   setup() {
     const authStore = useAuthStore()

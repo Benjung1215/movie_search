@@ -1,6 +1,5 @@
 <template>
-  <div class="min-h-screen bg-dark-900">
-    <div class="container mx-auto px-4 py-8">
+  <div>
       <h1 class="text-3xl font-bold text-primary-500 mb-8">
         電影搜尋
       </h1>
@@ -182,7 +181,6 @@
       <div v-if="searchQuery && !moviesStore.hasSearchResults && !moviesStore.isLoading && !moviesStore.hasError" class="text-center py-8">
         <p class="text-gray-400">沒有找到符合的電影</p>
       </div>
-    </div>
   </div>
 </template>
 
