@@ -14,7 +14,9 @@ export function useSearchHistory() {
         history.value = JSON.parse(stored)
       }
     } catch (error) {
-      console.error('載入搜尋歷史時發生錯誤:', error)
+      if (import.meta.env.DEV) {
+        console.error('載入搜尋歷史時發生錯誤:', error)
+      }
       history.value = []
     }
   }
@@ -24,7 +26,9 @@ export function useSearchHistory() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(history.value))
     } catch (error) {
-      console.error('保存搜尋歷史時發生錯誤:', error)
+      if (import.meta.env.DEV) {
+        console.error('保存搜尋歷史時發生錯誤:', error)
+      }
     }
   }
 

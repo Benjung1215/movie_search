@@ -318,7 +318,9 @@ export default {
         try {
           await moviesStore.fetchMovieDetails(movieId)
         } catch (error) {
-          console.error('Failed to load movie details:', error)
+          if (import.meta.env.DEV) {
+            console.error('Failed to load movie details:', error)
+          }
         }
       }
     }

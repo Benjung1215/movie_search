@@ -316,7 +316,9 @@ export default {
         totalResults.value = response.total_results
         
       } catch (err) {
-        console.error('Error performing search:', err)
+        if (import.meta.env.DEV) {
+          console.error('Error performing search:', err)
+        }
         error.value = '搜尋失敗，請稍後重試'
       } finally {
         loading.value = false

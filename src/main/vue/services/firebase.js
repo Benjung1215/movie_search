@@ -19,7 +19,7 @@ const app = initializeApp(firebaseConfig)
 export const auth = getAuth(app)
 export const db = getFirestore(app)
 
-// 設定 Firebase Auth 語言為中文
-auth.languageCode = 'zh-TW'
+// Set Firebase Auth language to English
+auth.languageCode = 'en'
 
 export default app

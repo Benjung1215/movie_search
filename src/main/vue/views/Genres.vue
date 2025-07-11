@@ -143,7 +143,9 @@ export default {
               ...stats
             })
           } catch (err) {
-            console.error(`Error loading stats for genre ${genre.name}:`, err)
+            if (import.meta.env.DEV) {
+              console.error(`Error loading stats for genre ${genre.name}:`, err)
+            }
             // 如果某個類型載入失敗，仍然添加基本資料
             genresData.push({
               ...genre,
@@ -158,7 +160,9 @@ export default {
         genresWithStats.value = genresData.sort((a, b) => b.totalResults - a.totalResults)
         
       } catch (err) {
-        console.error('Error loading genres:', err)
+        if (import.meta.env.DEV) {
+          console.error('Error loading genres:', err)
+        }
         error.value = '載入類型資料失敗，請稍後重試'
       } finally {
         loading.value = false

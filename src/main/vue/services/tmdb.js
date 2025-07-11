@@ -12,7 +12,7 @@ class TMDBService {
   async fetchFromAPI(endpoint, params = {}) {
     const url = new URL(`${this.baseURL}${endpoint}`)
     url.searchParams.append('api_key', this.apiKey)
-    url.searchParams.append('language', 'zh-TW')
+    url.searchParams.append('language', 'en-US')
     
     Object.entries(params).forEach(([key, value]) => {
       if (value !== undefined && value !== null) {
@@ -27,7 +27,10 @@ class TMDBService {
       }
       return await response.json()
     } catch (error) {
-      console.error('TMDB API Error:', error)
+      // Log error in development only
+      if (import.meta.env.DEV) {
+        console.error('TMDB API Error:', error)
+      }
       throw error
     }
   }
@@ -178,7 +181,10 @@ class TMDBService {
         popularMovies: response.results.slice(0, 4)
       }
     } catch (error) {
-      console.error('Error fetching genre stats:', error)
+      // Log error in development only
+      if (import.meta.env.DEV) {
+        console.error('Error fetching genre stats:', error)
+      }
       return {
         totalResults: 0,
         totalPages: 0,
@@ -205,7 +211,10 @@ class TMDBService {
       
       return genresWithStats
     } catch (error) {
-      console.error('Error fetching all genres stats:', error)
+      // Log error in development only
+      if (import.meta.env.DEV) {
+        console.error('Error fetching all genres stats:', error)
+      }
       return []
     }
   }

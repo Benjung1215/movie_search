@@ -55,7 +55,9 @@ export const useWatchlistStore = defineStore('watchlist', () => {
         return localWatchlist
       }
     } catch (error) {
-      console.error('Error loading watchlist from storage:', error)
+      if (import.meta.env.DEV) {
+        console.error('Error loading watchlist from storage:', error)
+      }
     }
     return []
   }
@@ -65,7 +67,9 @@ export const useWatchlistStore = defineStore('watchlist', () => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(watchlist.value))
     } catch (error) {
-      console.error('Error saving watchlist to storage:', error)
+      if (import.meta.env.DEV) {
+        console.error('Error saving watchlist to storage:', error)
+      }
     }
   }
 
@@ -99,7 +103,9 @@ export const useWatchlistStore = defineStore('watchlist', () => {
 
       return cloudWatchlist
     } catch (err) {
-      console.error('Error loading watchlist from cloud:', err)
+      if (import.meta.env.DEV) {
+        console.error('Error loading watchlist from cloud:', err)
+      }
       setError('載入雲端觀看清單失敗')
       return []
     } finally {
@@ -140,7 +146,9 @@ export const useWatchlistStore = defineStore('watchlist', () => {
       })
       return true
     } catch (err) {
-      console.error('Error syncing watchlist to cloud:', err)
+      if (import.meta.env.DEV) {
+        console.error('Error syncing watchlist to cloud:', err)
+      }
       return false
     }
   }
@@ -155,7 +163,9 @@ export const useWatchlistStore = defineStore('watchlist', () => {
       await deleteDoc(movieDoc)
       return true
     } catch (err) {
-      console.error('Error removing watchlist from cloud:', err)
+      if (import.meta.env.DEV) {
+        console.error('Error removing watchlist from cloud:', err)
+      }
       return false
     }
   }
@@ -188,13 +198,19 @@ export const useWatchlistStore = defineStore('watchlist', () => {
         saveWatchlistToStorage()
         isCloudSynced.value = true
         
-        console.log('雲端觀看清單同步完成:', mergedWatchlist.length, '部電影')
+        if (import.meta.env.DEV) {
+          console.log('雲端觀看清單同步完成:', mergedWatchlist.length, '部電影')
+        }
       }, (err) => {
-        console.error('雲端同步錯誤:', err)
+        if (import.meta.env.DEV) {
+          console.error('雲端同步錯誤:', err)
+        }
         setError('雲端同步失敗')
       })
     } catch (err) {
-      console.error('設定雲端同步失敗:', err)
+      if (import.meta.env.DEV) {
+        console.error('設定雲端同步失敗:', err)
+      }
     }
   }
 
@@ -394,9 +410,13 @@ export const useWatchlistStore = defineStore('watchlist', () => {
       // 設定即時同步
       await setupCloudSync()
       
-      console.log('用戶觀看清單初始化完成:', mergedWatchlist.length, '部電影')
+      if (import.meta.env.DEV) {
+        console.log('用戶觀看清單初始化完成:', mergedWatchlist.length, '部電影')
+      }
     } catch (err) {
-      console.error('用戶觀看清單初始化失敗:', err)
+      if (import.meta.env.DEV) {
+        console.error('用戶觀看清單初始化失敗:', err)
+      }
       setError('初始化觀看清單失敗')
     } finally {
       setLoading(false)
@@ -408,7 +428,9 @@ export const useWatchlistStore = defineStore('watchlist', () => {
     stopCloudSync()
     // 保持本地數據，但標記為未同步
     isCloudSynced.value = false
-    console.log('觀看清單雲端同步已停止')
+    if (import.meta.env.DEV) {
+      console.log('觀看清單雲端同步已停止')
+    }
   }
 
   return {

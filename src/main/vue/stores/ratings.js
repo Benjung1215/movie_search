@@ -70,7 +70,9 @@ export const useRatingsStore = defineStore('ratings', () => {
         return localRatings
       }
     } catch (error) {
-      console.error('Error loading ratings from storage:', error)
+      if (import.meta.env.DEV) {
+        console.error('Error loading ratings from storage:', error)
+      }
     }
     return []
   }
@@ -80,7 +82,9 @@ export const useRatingsStore = defineStore('ratings', () => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(ratings.value))
     } catch (error) {
-      console.error('Error saving ratings to storage:', error)
+      if (import.meta.env.DEV) {
+        console.error('Error saving ratings to storage:', error)
+      }
     }
   }
 
@@ -114,7 +118,9 @@ export const useRatingsStore = defineStore('ratings', () => {
 
       return cloudRatings
     } catch (err) {
-      console.error('Error loading ratings from cloud:', err)
+      if (import.meta.env.DEV) {
+        console.error('Error loading ratings from cloud:', err)
+      }
       setError('載入雲端評分失敗')
       return []
     } finally {
@@ -155,7 +161,9 @@ export const useRatingsStore = defineStore('ratings', () => {
       })
       return true
     } catch (err) {
-      console.error('Error syncing rating to cloud:', err)
+      if (import.meta.env.DEV) {
+        console.error('Error syncing rating to cloud:', err)
+      }
       return false
     }
   }
@@ -170,7 +178,9 @@ export const useRatingsStore = defineStore('ratings', () => {
       await deleteDoc(ratingDoc)
       return true
     } catch (err) {
-      console.error('Error removing rating from cloud:', err)
+      if (import.meta.env.DEV) {
+        console.error('Error removing rating from cloud:', err)
+      }
       return false
     }
   }
@@ -203,13 +213,19 @@ export const useRatingsStore = defineStore('ratings', () => {
         saveRatingsToStorage()
         isCloudSynced.value = true
         
-        console.log('雲端評分同步完成:', mergedRatings.length, '個評分')
+        if (import.meta.env.DEV) {
+          console.log('雲端評分同步完成:', mergedRatings.length, '個評分')
+        }
       }, (err) => {
-        console.error('雲端同步錯誤:', err)
+        if (import.meta.env.DEV) {
+          console.error('雲端同步錯誤:', err)
+        }
         setError('雲端同步失敗')
       })
     } catch (err) {
-      console.error('設定雲端同步失敗:', err)
+      if (import.meta.env.DEV) {
+        console.error('設定雲端同步失敗:', err)
+      }
     }
   }
 
@@ -393,9 +409,13 @@ export const useRatingsStore = defineStore('ratings', () => {
       // 設定即時同步
       await setupCloudSync()
       
-      console.log('用戶評分初始化完成:', mergedRatings.length, '個評分')
+      if (import.meta.env.DEV) {
+        console.log('用戶評分初始化完成:', mergedRatings.length, '個評分')
+      }
     } catch (err) {
-      console.error('用戶評分初始化失敗:', err)
+      if (import.meta.env.DEV) {
+        console.error('用戶評分初始化失敗:', err)
+      }
       setError('初始化評分失敗')
     } finally {
       setLoading(false)
@@ -406,7 +426,9 @@ export const useRatingsStore = defineStore('ratings', () => {
   const cleanup = () => {
     stopCloudSync()
     isCloudSynced.value = false
-    console.log('評分雲端同步已停止')
+    if (import.meta.env.DEV) {
+      console.log('評分雲端同步已停止')
+    }
   }
 
   return {

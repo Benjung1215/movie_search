@@ -154,13 +154,17 @@ export default {
       async (isAuthenticated, wasAuthenticated) => {
         if (isAuthenticated && !wasAuthenticated) {
           // 用戶剛登入 - 初始化雲端同步
-          console.log('用戶登入，開始同步收藏')
+          if (import.meta.env.DEV) {
+            console.log('用戶登入，開始同步收藏')
+          }
           await favoritesStore.initWithUser()
           await watchlistStore.initWithUser()
           await ratingsStore.initWithUser()
         } else if (!isAuthenticated && wasAuthenticated) {
           // 用戶剛登出 - 清理雲端同步
-          console.log('用戶登出，停止同步收藏')
+          if (import.meta.env.DEV) {
+            console.log('用戶登出，停止同步收藏')
+          }
           favoritesStore.cleanup()
           watchlistStore.cleanup()
           ratingsStore.cleanup()

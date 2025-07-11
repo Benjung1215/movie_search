@@ -279,7 +279,9 @@ export default {
         totalResults.value = response.total_results
         
       } catch (err) {
-        console.error('Error loading movies:', err)
+        if (import.meta.env.DEV) {
+          console.error('Error loading movies:', err)
+        }
         error.value = '載入電影失敗，請稍後重試'
       } finally {
         loading.value = false
@@ -333,7 +335,9 @@ export default {
         
         currentGenre.value = moviesStore.genres.find(g => g.id === genreId.value)
       } catch (err) {
-        console.error('Error loading genre info:', err)
+        if (import.meta.env.DEV) {
+          console.error('Error loading genre info:', err)
+        }
       }
     }
 

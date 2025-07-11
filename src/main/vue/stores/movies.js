@@ -59,7 +59,9 @@ export const useMoviesStore = defineStore('movies', () => {
       totalResults.value = response.total_results
     } catch (err) {
       setError('Failed to search movies')
-      console.error('Error searching movies:', err)
+      if (import.meta.env.DEV) {
+        console.error('Error searching movies:', err)
+      }
     } finally {
       setLoading(false)
     }
@@ -87,7 +89,9 @@ export const useMoviesStore = defineStore('movies', () => {
       }
     } catch (err) {
       setError('Failed to load popular movies')
-      console.error('Error fetching popular movies:', err)
+      if (import.meta.env.DEV) {
+        console.error('Error fetching popular movies:', err)
+      }
     } finally {
       setLoading(false)
     }
@@ -104,7 +108,9 @@ export const useMoviesStore = defineStore('movies', () => {
       return response
     } catch (err) {
       setError('Failed to load movie details')
-      console.error('Error fetching movie details:', err)
+      if (import.meta.env.DEV) {
+        console.error('Error fetching movie details:', err)
+      }
       throw err
     } finally {
       setLoading(false)
@@ -117,7 +123,9 @@ export const useMoviesStore = defineStore('movies', () => {
       const response = await tmdbService.getGenres()
       genres.value = response.genres
     } catch (err) {
-      console.error('Error fetching genres:', err)
+      if (import.meta.env.DEV) {
+        console.error('Error fetching genres:', err)
+      }
     }
   }
 

@@ -63,7 +63,9 @@ export function useImageLoader() {
     } catch (err) {
       error.value = true
       loading.value = false
-      console.error('Image loading error:', err)
+      if (import.meta.env.DEV) {
+        console.error('Image loading error:', err)
+      }
       throw err
     }
   }
@@ -75,7 +77,9 @@ export function useImageLoader() {
     try {
       await Promise.allSettled(promises)
     } catch (error) {
-      console.warn('Some images failed to preload:', error)
+      if (import.meta.env.DEV) {
+        console.warn('Some images failed to preload:', error)
+      }
     }
   }
 

@@ -296,7 +296,9 @@ export default {
         await watchlistStore.clearAllWatchlist()
         showClearConfirm.value = false
       } catch (error) {
-        console.error('清空觀看清單失敗:', error)
+        if (import.meta.env.DEV) {
+          console.error('清空觀看清單失敗:', error)
+        }
       }
     }
 

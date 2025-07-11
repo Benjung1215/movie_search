@@ -201,7 +201,9 @@ export default {
         await authStore.signInWithGoogle()
         closeModal()
       } catch (error) {
-        console.error('Google 登入失敗:', error)
+        if (import.meta.env.DEV) {
+          console.error('Google 登入失敗:', error)
+        }
       }
     }
 
@@ -211,7 +213,9 @@ export default {
         await authStore.signInWithGitHub()
         closeModal()
       } catch (error) {
-        console.error('GitHub 登入失敗:', error)
+        if (import.meta.env.DEV) {
+          console.error('GitHub 登入失敗:', error)
+        }
       }
     }
 
@@ -221,7 +225,9 @@ export default {
         await authStore.logout()
         closeDropdown()
       } catch (error) {
-        console.error('登出失敗:', error)
+        if (import.meta.env.DEV) {
+          console.error('登出失敗:', error)
+        }
       }
     }
 

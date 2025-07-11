@@ -289,7 +289,9 @@ export default {
         .map(([name, count]) => ({ name, count }))
         .sort((a, b) => b.count - a.count)
 
-      console.log('類型統計:', stats) // 除錯用
+      if (import.meta.env.DEV) {
+        console.log('類型統計:', stats) // 除錯用
+      }
       return stats
     })
 
@@ -311,7 +313,9 @@ export default {
         await authStore.logout()
         router.push('/')
       } catch (error) {
-        console.error('登出失敗:', error)
+        if (import.meta.env.DEV) {
+          console.error('登出失敗:', error)
+        }
       }
     }
 
@@ -320,7 +324,9 @@ export default {
         await favoritesStore.clearAllFavorites()
         showClearConfirm.value = false
       } catch (error) {
-        console.error('清空收藏失敗:', error)
+        if (import.meta.env.DEV) {
+          console.error('清空收藏失敗:', error)
+        }
       }
     }
 
