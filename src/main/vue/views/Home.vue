@@ -6,7 +6,7 @@
           🎬 Vue Movie Search
         </h1>
         <p class="text-gray-400 text-xl mb-8">
-          現代化的電影搜尋和收藏應用程式
+          {{ $t('common.app.description') }}
         </p>
         
         <!-- 快速搜尋 -->
@@ -14,7 +14,7 @@
           <div class="relative">
             <input 
               type="text" 
-              placeholder="搜尋電影..."
+              :placeholder="$t('search.searchMovies')"
               class="input w-full text-lg pr-12"
               v-model="quickSearchQuery"
               @keyup.enter="handleQuickSearch"
@@ -36,26 +36,26 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
         <div class="card p-6 text-center">
           <div class="text-3xl font-bold text-primary-500 mb-2">{{ favoritesStore.favoriteCount }}</div>
-          <div class="text-gray-400">已收藏電影</div>
+          <div class="text-gray-400">{{ $t('movies.stats.favoritedMovies') }}</div>
         </div>
         
         <div class="card p-6 text-center">
           <div class="text-3xl font-bold text-primary-500 mb-2">{{ moviesStore.totalResults || '∞' }}</div>
-          <div class="text-gray-400">可搜尋電影</div>
+          <div class="text-gray-400">{{ $t('movies.stats.searchableMovies') }}</div>
         </div>
         
         <div class="card p-6 text-center">
           <div class="text-3xl font-bold text-primary-500 mb-2">HD</div>
-          <div class="text-gray-400">高畫質海報</div>
+          <div class="text-gray-400">{{ $t('movies.stats.hdPosters') }}</div>
         </div>
       </div>
 
       <!-- 熱門電影預覽 -->
       <div v-if="moviesStore.hasPopularMovies">
         <div class="flex items-center justify-between mb-6">
-          <h2 class="text-2xl font-semibold text-white">熱門電影</h2>
+          <h2 class="text-2xl font-semibold text-white">{{ $t('movies.popular') }}</h2>
           <router-link to="/search" class="text-primary-500 hover:text-primary-400 flex items-center gap-1">
-            查看更多
+            {{ $t('common.actions.viewMore') }}
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
@@ -89,9 +89,9 @@
       <!-- 熱門類型快速入口 -->
       <div v-if="popularGenres.length > 0">
         <div class="flex items-center justify-between mb-6">
-          <h2 class="text-2xl font-semibold text-white">熱門類型</h2>
+          <h2 class="text-2xl font-semibold text-white">{{ $t('movies.genres') }}</h2>
           <router-link to="/genres" class="text-primary-500 hover:text-primary-400 flex items-center gap-1">
-            查看全部
+            {{ $t('common.actions.viewAll') }}
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
@@ -115,7 +115,7 @@
       <!-- 載入狀態 -->
       <div v-if="moviesStore.isLoading" class="text-center py-8">
         <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500"></div>
-        <p class="text-gray-400 mt-2">載入中...</p>
+        <p class="text-gray-400 mt-2">{{ $t('common.states.loading') }}</p>
       </div>
 
       <!-- 功能介紹 -->
@@ -126,8 +126,8 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </div>
-          <h3 class="text-xl font-semibold text-white mb-2">智能搜尋</h3>
-          <p class="text-gray-400">快速搜尋電影資料庫，找到你想要的電影</p>
+          <h3 class="text-xl font-semibold text-white mb-2">Smart Search</h3>
+          <p class="text-gray-400">Quickly search the movie database to find what you're looking for</p>
         </div>
         
         <div class="text-center">
@@ -136,8 +136,8 @@
               <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
             </svg>
           </div>
-          <h3 class="text-xl font-semibold text-white mb-2">收藏管理</h3>
-          <p class="text-gray-400">建立個人收藏清單，永不遺失喜愛的電影</p>
+          <h3 class="text-xl font-semibold text-white mb-2">Collection Management</h3>
+          <p class="text-gray-400">Create personal collections and never lose track of your favorite movies</p>
         </div>
         
         <div class="text-center">
@@ -146,8 +146,8 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h3 class="text-xl font-semibold text-white mb-2">詳細資訊</h3>
-          <p class="text-gray-400">查看完整電影資訊、演員陣容和相似推薦</p>
+          <h3 class="text-xl font-semibold text-white mb-2">Detailed Information</h3>
+          <p class="text-gray-400">View complete movie information, cast details, and similar recommendations</p>
         </div>
       </div>
   </div>
@@ -159,6 +159,7 @@ import { useRouter } from 'vue-router'
 import { useMoviesStore } from '../stores/movies.js'
 import { useFavoritesStore } from '../stores/favorites.js'
 import { useWatchlistStore } from '../stores/watchlist.js'
+import { useSEO } from '../composables/useSEO.js'
 import tmdbService from '../services/tmdb.js'
 
 export default {
@@ -168,6 +169,7 @@ export default {
     const moviesStore = useMoviesStore()
     const favoritesStore = useFavoritesStore()
     const watchlistStore = useWatchlistStore()
+    const { generatePageSEO } = useSEO()
     const quickSearchQuery = ref('')
     const popularGenres = ref([])
 
@@ -201,6 +203,9 @@ export default {
 
     // 初始化
     onMounted(async () => {
+      // 設定首頁 SEO
+      generatePageSEO('home')
+      
       // 載入電影類型（確保類型功能正常）
       if (moviesStore.genres.length === 0) {
         await moviesStore.fetchGenres()

@@ -58,7 +58,7 @@ export const useMoviesStore = defineStore('movies', () => {
       totalPages.value = response.total_pages
       totalResults.value = response.total_results
     } catch (err) {
-      setError('搜尋電影時發生錯誤')
+      setError('Failed to search movies')
       console.error('Error searching movies:', err)
     } finally {
       setLoading(false)
@@ -86,7 +86,7 @@ export const useMoviesStore = defineStore('movies', () => {
         popularMovies.value = [...popularMovies.value, ...response.results]
       }
     } catch (err) {
-      setError('載入熱門電影時發生錯誤')
+      setError('Failed to load popular movies')
       console.error('Error fetching popular movies:', err)
     } finally {
       setLoading(false)
@@ -103,7 +103,7 @@ export const useMoviesStore = defineStore('movies', () => {
       currentMovie.value = response
       return response
     } catch (err) {
-      setError('載入電影詳情時發生錯誤')
+      setError('Failed to load movie details')
       console.error('Error fetching movie details:', err)
       throw err
     } finally {

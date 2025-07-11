@@ -1,0 +1,50 @@
+{
+  "title": "Movies",
+  "movie": "Movie",
+  "movies": "Movies",
+  "details": "Movie Details",
+  "overview": "Overview",
+  "noOverview": "No overview available",
+  "genres": "Genres",
+  "genre": "Genre",
+  "releaseDate": "Release Date",
+  "runtime": "Runtime",
+  "director": "Director",
+  "cast": "Cast",
+  "crew": "Crew",
+  "similar": "Similar Movies",
+  "recommended": "Recommended",
+  "popular": "Popular Movies",
+  "topRated": "Top Rated",
+  "upcoming": "Upcoming",
+  "nowPlaying": "Now Playing",
+  "trending": "Trending",
+  "favorites": {
+    "title": "Favorites",
+    "add": "Add to Favorites",
+    "remove": "Remove from Favorites",
+    "empty": "No favorite movies yet",
+    "count": "{count} favorite movies"
+  },
+  "watchlist": {
+    "title": "Watchlist",
+    "add": "Add to Watchlist",
+    "remove": "Remove from Watchlist",
+    "empty": "No movies in watchlist",
+    "count": "{count} movies in watchlist"
+  },
+  "rating": {
+    "title": "My Ratings",
+    "rate": "Rate this movie",
+    "yourRating": "Your Rating",
+    "tmdbRating": "TMDB Rating",
+    "userRating": "User Rating",
+    "notRated": "Not rated yet",
+    "rateMovie": "Rate Movie"
+  },
+  "stats": {
+    "favoritedMovies": "Favorited Movies",
+    "searchableMovies": "Searchable Movies",
+    "hdPosters": "HD Posters"
+  }
+}

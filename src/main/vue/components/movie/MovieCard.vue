@@ -3,7 +3,7 @@
     <div class="relative">
       <OptimizedImage
         :src="posterUrl"
-        :alt="movie.title"
+        :alt="`${movie.title} movie poster${movie.release_date ? ` (${new Date(movie.release_date).getFullYear()})` : ''} - Rating: ${formatRating(movie.vote_average)}/10`"
         fallback-src="/placeholder-poster.jpg"
         aspect-ratio="2/3"
         container-class="relative overflow-hidden"
@@ -23,7 +23,7 @@
           @click.stop="toggleFavorite"
           class="p-2 rounded-full transition-colors"
           :class="isFavorite ? 'bg-red-500 text-white' : 'bg-black bg-opacity-50 text-gray-300 hover:bg-red-500 hover:text-white'"
-          title="收藏"
+          :title="$t('movies.favorites.add')"
         >
           <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
@@ -35,7 +35,7 @@
           @click.stop="toggleWatchlist"
           class="p-2 rounded-full transition-colors"
           :class="isInWatchlist ? 'bg-blue-500 text-white' : 'bg-black bg-opacity-50 text-gray-300 hover:bg-blue-500 hover:text-white'"
-          title="觀看清單"
+          :title="$t('movies.watchlist.add')"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
@@ -50,7 +50,7 @@
       </h3>
       
       <p class="text-gray-400 text-sm mb-3 line-clamp-2">
-        {{ movie.overview || '暫無劇情簡介' }}
+        {{ movie.overview || $t('movies.noOverview') }}
       </p>
       
       <div class="flex items-center justify-between text-sm text-gray-500 mb-2">

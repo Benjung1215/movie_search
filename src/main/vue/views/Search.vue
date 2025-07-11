@@ -1,7 +1,7 @@
 <template>
   <div>
       <h1 class="text-3xl font-bold text-primary-500 mb-8">
-        電影搜尋
+        {{ $t('search.title') }}
       </h1>
       
       <!-- 搜尋輸入框 -->
@@ -10,7 +10,7 @@
           <input 
             ref="searchInput"
             type="text" 
-            placeholder="搜尋電影..."
+            :placeholder="$t('search.searchMovies')"
             class="input w-full text-lg pr-12"
             v-model="searchQuery"
             @input="handleSearchInput"
@@ -34,7 +34,7 @@
           >
             <!-- 搜尋建議 -->
             <div v-if="suggestions.length > 0" class="border-b border-dark-600 p-2">
-              <div class="text-xs text-gray-400 mb-2">搜尋建議</div>
+              <div class="text-xs text-gray-400 mb-2">{{ $t('search.searchSuggestions') }}</div>
               <button
                 v-for="suggestion in suggestions"
                 :key="suggestion"
@@ -51,12 +51,12 @@
             <!-- 最近搜尋 -->
             <div v-if="searchHistory.recentSearches.length > 0" class="p-2">
               <div class="text-xs text-gray-400 mb-2 flex items-center justify-between">
-                <span>最近搜尋</span>
+                <span>{{ $t('search.recentSearches') }}</span>
                 <button 
                   @click="searchHistory.clearHistory()"
                   class="text-red-400 hover:text-red-300 text-xs"
                 >
-                  清除
+                  {{ $t('search.clearHistory') }}
                 </button>
               </div>
               <button
@@ -93,7 +93,7 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"/>
             </svg>
-            進階搜尋
+            {{ $t('search.advancedSearch') }}
           </router-link>
         </div>
       </div>
@@ -102,7 +102,7 @@
       <div v-if="moviesStore.isLoading && !moviesStore.hasSearchResults">
         <div class="text-center mb-8">
           <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500"></div>
-          <p class="text-gray-400 mt-2">搜尋中...</p>
+          <p class="text-gray-400 mt-2">{{ $t('common.states.loading') }}</p>
         </div>
         
         <!-- 骨架屏 -->
@@ -122,7 +122,7 @@
           @click="retrySearch"
           class="btn-primary mt-4"
         >
-          重新搜尋
+          {{ $t('common.actions.retry') }}
         </button>
       </div>
 
@@ -130,10 +130,10 @@
       <div v-if="moviesStore.hasSearchResults && !moviesStore.isLoading">
         <div class="flex items-center justify-between mb-6">
           <h2 class="text-xl font-semibold text-white">
-            搜尋結果：{{ moviesStore.searchQuery }}
+            Search Results: {{ moviesStore.searchQuery }}
           </h2>
           <span class="text-gray-400 text-sm">
-            共找到 {{ moviesStore.totalResults }} 個結果
+            {{ $t('search.resultsFound', { count: moviesStore.totalResults }) }}
           </span>
         </div>
 
@@ -154,7 +154,7 @@
             class="btn-secondary"
             :disabled="moviesStore.isLoading"
           >
-            載入更多
+            {{ $t('search.loadMore') }}
           </button>
         </div>
       </div>
@@ -163,7 +163,7 @@
       <div v-if="!moviesStore.hasSearchResults && !moviesStore.isLoading && !moviesStore.hasError">
         <div v-if="moviesStore.hasPopularMovies">
           <h2 class="text-xl font-semibold text-white mb-6">
-            熱門電影
+            {{ $t('movies.popular') }}
           </h2>
           
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
@@ -179,7 +179,7 @@
 
       <!-- 沒有搜尋結果 -->
       <div v-if="searchQuery && !moviesStore.hasSearchResults && !moviesStore.isLoading && !moviesStore.hasError" class="text-center py-8">
-        <p class="text-gray-400">沒有找到符合的電影</p>
+        <p class="text-gray-400">{{ $t('search.noResults') }}</p>
       </div>
   </div>
 </template>

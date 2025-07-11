@@ -1,0 +1,45 @@
+{
+  "app": {
+    "title": "Vue Movie Search",
+    "description": "Modern Movie Search and Collection App"
+  },
+  "actions": {
+    "search": "Search",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "viewMore": "View More",
+    "viewAll": "View All",
+    "clear": "Clear",
+    "refresh": "Refresh",
+    "loading": "Loading...",
+    "retry": "Retry"
+  },
+  "states": {
+    "loading": "Loading...",
+    "noData": "No data available",
+    "empty": "Empty",
+    "error": "Error occurred",
+    "success": "Success",
+    "failed": "Failed"
+  },
+  "time": {
+    "year": "Year",
+    "month": "Month",
+    "day": "Day",
+    "hour": "Hour",
+    "minute": "Minute",
+    "second": "Second"
+  },
+  "rating": {
+    "rating": "Rating",
+    "stars": "Stars",
+    "outOf": "out of",
+    "votes": "votes | vote | votes"
+  }
+}

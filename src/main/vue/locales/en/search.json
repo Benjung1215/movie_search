@@ -1,0 +1,25 @@
+{
+  "title": "Movie Search",
+  "search": "Search",
+  "searchMovies": "Search movies...",
+  "searchPlaceholder": "Enter movie title...",
+  "searchSuggestions": "Search Suggestions",
+  "recentSearches": "Recent Searches",
+  "clearHistory": "Clear",
+  "noResults": "No results found",
+  "noResultsMessage": "Try searching with different keywords",
+  "resultsFound": "{count} results found | {count} result found | {count} results found",
+  "loadMore": "Load More",
+  "advancedSearch": "Advanced Search",
+  "filters": {
+    "title": "Filters",
+    "genre": "Genre",
+    "year": "Year",
+    "rating": "Rating",
+    "sortBy": "Sort by",
+    "popularity": "Popularity",
+    "releaseDate": "Release Date",
+    "voteAverage": "Rating",
+    "titleSort": "Title"
+  }
+}

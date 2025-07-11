@@ -4,11 +4,11 @@
       <!-- 標題和統計 -->
       <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
         <div>
-          <h1 class="text-3xl font-bold text-white mb-2">我的觀看清單</h1>
+          <h1 class="text-3xl font-bold text-white mb-2">{{ $t('movies.watchlist.title') }}</h1>
           <p class="text-gray-400">
-            管理您想看的電影 
+            Manage movies you want to watch
             <span v-if="watchlistStore.watchlistCount > 0" class="text-primary-500">
-              ({{ watchlistStore.watchlistCount }} 部電影)
+              ({{ watchlistStore.watchlistCount }} movies)
             </span>
           </p>
         </div>
@@ -20,9 +20,9 @@
             v-model="sortBy" 
             class="bg-dark-800 text-white px-4 py-2 rounded-lg border border-dark-600 focus:border-primary-500 focus:outline-none"
           >
-            <option value="date">依加入時間</option>
-            <option value="rating">依評分</option>
-            <option value="title">依標題</option>
+            <option value="date">By Date Added</option>
+            <option value="rating">By Rating</option>
+            <option value="title">By Title</option>
           </select>
           
           <!-- 狀態篩選 -->
@@ -30,9 +30,9 @@
             v-model="filterStatus" 
             class="bg-dark-800 text-white px-4 py-2 rounded-lg border border-dark-600 focus:border-primary-500 focus:outline-none"
           >
-            <option value="all">所有狀態</option>
-            <option value="want_to_watch">想看</option>
-            <option value="watched">已看</option>
+            <option value="all">All Status</option>
+            <option value="want_to_watch">Want to Watch</option>
+            <option value="watched">Watched</option>
           </select>
           
           <!-- 清空按鈕 -->
@@ -41,7 +41,7 @@
             @click="showClearConfirm = true"
             class="btn bg-red-600 hover:bg-red-700 text-white"
           >
-            清空清單
+            Clear List
           </button>
         </div>
       </div>

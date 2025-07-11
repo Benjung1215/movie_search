@@ -1,0 +1,16 @@
+{
+  "general": "An error occurred",
+  "network": "Network error",
+  "notFound": "Not found",
+  "unauthorized": "Unauthorized",
+  "server": "Server error",
+  "movies": {
+    "searchFailed": "Failed to search movies",
+    "loadFailed": "Failed to load movies",
+    "detailsFailed": "Failed to load movie details",
+    "popularFailed": "Failed to load popular movies",
+    "genresFailed": "Failed to load genres"
+  },
+  "retry": "Retry",
+  "goBack": "Go Back"
+}

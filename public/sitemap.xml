@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+    <!-- Homepage -->
+    <url>
+        <loc>https://vue-movie-search.vercel.app/</loc>
+        <lastmod>2025-01-11</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- Main Pages -->
+    <url>
+        <loc>https://vue-movie-search.vercel.app/search</loc>
+        <lastmod>2025-01-11</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <url>
+        <loc>https://vue-movie-search.vercel.app/search/advanced</loc>
+        <lastmod>2025-01-11</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://vue-movie-search.vercel.app/genres</loc>
+        <lastmod>2025-01-11</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://vue-movie-search.vercel.app/favorites</loc>
+        <lastmod>2025-01-11</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <url>
+        <loc>https://vue-movie-search.vercel.app/watchlist</loc>
+        <lastmod>2025-01-11</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <url>
+        <loc>https://vue-movie-search.vercel.app/ratings</loc>
+        <lastmod>2025-01-11</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <url>
+        <loc>https://vue-movie-search.vercel.app/profile</loc>
+        <lastmod>2025-01-11</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- Popular Genre Pages -->
+    <url>
+        <loc>https://vue-movie-search.vercel.app/genres/28</loc>
+        <lastmod>2025-01-11</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <url>
+        <loc>https://vue-movie-search.vercel.app/genres/12</loc>
+        <lastmod>2025-01-11</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <url>
+        <loc>https://vue-movie-search.vercel.app/genres/16</loc>
+        <lastmod>2025-01-11</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <url>
+        <loc>https://vue-movie-search.vercel.app/genres/35</loc>
+        <lastmod>2025-01-11</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <url>
+        <loc>https://vue-movie-search.vercel.app/genres/80</loc>
+        <lastmod>2025-01-11</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <url>
+        <loc>https://vue-movie-search.vercel.app/genres/18</loc>
+        <lastmod>2025-01-11</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <url>
+        <loc>https://vue-movie-search.vercel.app/genres/27</loc>
+        <lastmod>2025-01-11</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <url>
+        <loc>https://vue-movie-search.vercel.app/genres/878</loc>
+        <lastmod>2025-01-11</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+</urlset>

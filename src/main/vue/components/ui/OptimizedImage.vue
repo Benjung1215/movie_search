@@ -26,7 +26,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
-        <div class="text-xs">載入失敗</div>
+        <div class="text-xs">Failed to load</div>
       </div>
     </div>
 
@@ -36,9 +36,10 @@
       :src="currentSrc"
       :alt="alt"
       :class="imageClass"
+      :loading="preload ? 'eager' : 'lazy'"
+      decoding="async"
       @load="handleLoad"
       @error="handleError"
-      loading="lazy"
     />
 
     <!-- 遮罩層 -->

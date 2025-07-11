@@ -3,7 +3,7 @@
     <div class="container mx-auto px-4 py-8">
       <div class="flex items-center justify-between mb-8">
         <h1 class="text-3xl font-bold text-primary-500">
-          我的收藏
+          {{ $t('movies.favorites.title') }}
         </h1>
         
         <div v-if="favoritesStore.hasFavorites" class="flex items-center gap-4">
@@ -11,7 +11,7 @@
           <div class="relative">
             <input 
               type="text" 
-              placeholder="搜尋收藏..."
+              placeholder="Search favorites..."
               class="input w-64"
               v-model="searchQuery"
             >
@@ -25,9 +25,9 @@
             v-model="sortBy"
             class="input w-40"
           >
-            <option value="date">加入時間</option>
-            <option value="title">電影標題</option>
-            <option value="rating">評分</option>
+            <option value="date">Date Added</option>
+            <option value="title">Movie Title</option>
+            <option value="rating">Rating</option>
           </select>
           
           <!-- 清空收藏按鈕 -->
@@ -35,7 +35,7 @@
             @click="showClearConfirm = true"
             class="btn bg-red-600 hover:bg-red-700 text-white"
           >
-            清空收藏
+            Clear All
           </button>
         </div>
       </div>
@@ -43,9 +43,9 @@
       <!-- 收藏統計 -->
       <div v-if="favoritesStore.hasFavorites" class="mb-6">
         <p class="text-gray-400">
-          共收藏了 <span class="text-primary-500 font-semibold">{{ favoritesStore.favoriteCount }}</span> 部電影
+          Total {{ favoritesStore.favoriteCount }} favorite movies
           <span v-if="filteredFavorites.length !== favoritesStore.favoriteCount">
-            ，顯示 <span class="text-primary-500 font-semibold">{{ filteredFavorites.length }}</span> 部
+            , showing {{ filteredFavorites.length }}
           </span>
         </p>
       </div>
